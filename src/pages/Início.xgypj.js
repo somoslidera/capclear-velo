@@ -1,7 +1,7 @@
 // ============================================
-// CAPCLEAR - Landing Page (Estilo Moderno)
-// High-conversion page for helmet sanitization service
-// Design: Industrial Clean (Dark Mode) - Estilo Moderno
+// CAPCLEAR - Landing Page Moderna
+// Baseado no homepage.html - Adaptado para Wix Velo
+// Design: Industrial Clean (Dark Mode) - Estilo Moderno Completo
 // Target: "O Corre" (delivery drivers/couriers)
 // ============================================
 
@@ -18,13 +18,55 @@ const COLORS = {
     ACCENT: "#B0B0B0",            // Prata/Metal - Bordas e elementos secundários
     BLUE_600: "#2563EB",          // Azul para gradientes
     SLATE_900: "#0F172A",         // Slate escuro
-    SLATE_800: "#1E293B"          // Slate médio
+    SLATE_800: "#1E293B",         // Slate médio
+    SLATE_50: "#F8FAFC"           // Slate claro (fundo claro)
 };
 
 // ============================================
-// CONTEÚDO CAPCLEAR - TEXTOS E IDENTIDADE
+// CONFIGURAÇÃO - ATUALIZE COM SEUS DADOS REAIS
+// ============================================
+const CONFIG = {
+    whatsapp: {
+        numero: "555199999999", // Formato: código país + DDD + número (sem +)
+        mensagem: "Olá! Gostaria de agendar uma Telebusca para higienização do meu capacete."
+    },
+    instagram: "https://instagram.com/capclear",
+    facebook: "https://facebook.com/capclear",
+    email: "contato@capclear.com.br",
+    telefone: "(51) 99999-9999",
+    postos: [
+        {
+            nome: "Posto Ipiranga - Centro",
+            endereco: "Av. Guilherme Schell, 1200 - Centro, Canoas",
+            coordenadas: { lat: -29.9180, lng: -51.1782 }
+        },
+        {
+            nome: "Posto Shell - Mal. Rondon",
+            endereco: "Rua Munique, 550 - Mal. Rondon, Canoas",
+            coordenadas: { lat: -29.9178, lng: -51.1836 }
+        },
+        {
+            nome: "Posto BR - Mathias Velho",
+            endereco: "Av. Rio Grande do Sul, 2100 - Mathias Velho, Canoas",
+            coordenadas: { lat: -29.9200, lng: -51.1800 }
+        }
+    ]
+};
+
+// ============================================
+// CONTEÚDO CAPCLEAR - TEXTOS COMPLETOS
 // ============================================
 const CAPCLEAR_CONTENT = {
+    // Navigation
+    nav: {
+        logo: "CAPCLEAR",
+        menuItems: [
+            { text: "Como Funciona", href: "#como-funciona" },
+            { text: "Onde Encontrar", href: "#onde-encontrar" },
+            { text: "Telebusca", href: "#telebusca", isCTA: true }
+        ]
+    },
+    
     // Hero Section
     hero: {
         badge: "⚡ Higienização Expressa",
@@ -33,12 +75,21 @@ const CAPCLEAR_CONTENT = {
         h1End: "EM MINUTOS.",
         subtitle: "A tecnologia de Ozônio e UV que elimina bactérias e tira o mau cheiro enquanto você abastece. Sem frescura, rápido e eficiente.",
         ctaPrimary: "📍 Encontrar Posto",
-        ctaSecondary: "🚴 Pedir Telebusca"
+        ctaSecondary: "🚴 Pedir Telebusca",
+        card: {
+            status: "100% Limpo",
+            titulo: "Higienização Profunda",
+            beneficios: [
+                "Elimina 99% das bactérias",
+                "Remove odores e suor",
+                "Secagem ultra-rápida"
+            ],
+            frase: "Tá na correria? A gente limpa."
+        }
     },
     
-    // Seção "Por que usar?" / Benefits
+    // Seção Benefits
     benefits: {
-        titulo: "Higiene é segurança.",
         cards: [
             {
                 titulo: "Saúde Blindada",
@@ -95,43 +146,11 @@ const CAPCLEAR_CONTENT = {
 };
 
 // ============================================
-// CONFIGURAÇÃO - ATUALIZE COM SEUS DADOS REAIS
-// ============================================
-const CONFIG = {
-    whatsapp: {
-        numero: "555199999999", // Formato: código país + DDD + número (sem +)
-        mensagem: "Olá! Gostaria de agendar uma Telebusca para higienização do meu capacete."
-    },
-    instagram: "https://instagram.com/capclear",
-    email: "contato@capclear.com.br",
-    telefone: "(51) 99999-9999",
-    postos: [
-        {
-            nome: "Posto Ipiranga - Centro",
-            endereco: "Av. Guilherme Schell, 1200 - Centro, Canoas",
-            coordenadas: { lat: -29.9180, lng: -51.1782 }
-        },
-        {
-            nome: "Posto Shell - Mal. Rondon",
-            endereco: "Rua Munique, 550 - Mal. Rondon, Canoas",
-            coordenadas: { lat: -29.9178, lng: -51.1836 }
-        },
-        {
-            nome: "Posto BR - Mathias Velho",
-            endereco: "Av. Rio Grande do Sul, 2100 - Mathias Velho, Canoas",
-            coordenadas: { lat: -29.9200, lng: -51.1800 }
-        }
-    ]
-};
-
-// ============================================
 // FUNÇÕES DE NAVEGAÇÃO E LOCALIZAÇÃO
 // ============================================
 
 /**
  * Localizador Inteligente - Detecta dispositivo e abre app apropriado
- * Mobile: Tenta Waze App primeiro, fallback para Google Maps App
- * Desktop: Google Maps em nova aba
  */
 function handleMapNavigation(lat, lon, endereco = "") {
     const formFactor = wixWindow.formFactor;
@@ -175,14 +194,33 @@ function openTelebuscaWhatsApp() {
 }
 
 // ============================================
-// APLICAÇÃO DE CONTEÚDO E IDENTIDADE VISUAL
+// APLICAÇÃO DE CONTEÚDO COMPLETO
 // ============================================
 
 /**
  * Preenche automaticamente todos os textos da landing page
- * com o conteúdo oficial da CapClear (estilo moderno)
  */
-function aplicarConteudoCapClear() {
+function aplicarConteudoCompleto() {
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    try {
+        const navLogo = $w("#navLogo");
+        if (navLogo && navLogo.text !== undefined) {
+            navLogo.text = CAPCLEAR_CONTENT.nav.logo;
+        }
+        
+        // Menu items (opcional - se você criar elementos de menu)
+        CAPCLEAR_CONTENT.nav.menuItems.forEach((item, index) => {
+            const menuItem = $w(`#navMenuItem${index + 1}`);
+            if (menuItem && menuItem.text !== undefined) {
+                menuItem.text = item.text;
+            }
+        });
+    } catch (error) {
+        console.log("Elementos de navegação não encontrados (opcional)");
+    }
+    
     // ============================================
     // HERO SECTION
     // ============================================
@@ -221,20 +259,37 @@ function aplicarConteudoCapClear() {
         if (heroCtaSecondary && heroCtaSecondary.label !== undefined) {
             heroCtaSecondary.label = CAPCLEAR_CONTENT.hero.ctaSecondary;
         }
+        
+        // Hero Card (opcional)
+        const heroCardStatus = $w("#heroCardStatus");
+        if (heroCardStatus && heroCardStatus.text !== undefined) {
+            heroCardStatus.text = CAPCLEAR_CONTENT.hero.card.status;
+        }
+        
+        const heroCardTitulo = $w("#heroCardTitulo");
+        if (heroCardTitulo && heroCardTitulo.text !== undefined) {
+            heroCardTitulo.text = CAPCLEAR_CONTENT.hero.card.titulo;
+        }
+        
+        CAPCLEAR_CONTENT.hero.card.beneficios.forEach((beneficio, index) => {
+            const benefitElement = $w(`#heroCardBenefit${index + 1}`);
+            if (benefitElement && benefitElement.text !== undefined) {
+                benefitElement.text = beneficio;
+            }
+        });
+        
+        const heroCardFrase = $w("#heroCardFrase");
+        if (heroCardFrase && heroCardFrase.text !== undefined) {
+            heroCardFrase.text = `"${CAPCLEAR_CONTENT.hero.card.frase}"`;
+        }
     } catch (error) {
         console.log("Elementos do Hero não encontrados (opcional)");
     }
     
     // ============================================
-    // SEÇÃO BENEFITS / "POR QUE USAR?"
+    // SEÇÃO BENEFITS
     // ============================================
     try {
-        const benefitsTitulo = $w("#benefitsTitulo");
-        if (benefitsTitulo && benefitsTitulo.text !== undefined) {
-            benefitsTitulo.text = CAPCLEAR_CONTENT.benefits.titulo;
-        }
-        
-        // Cards: Saúde, Agilidade, Conforto
         const cardTitles = ["#benefitCard1Title", "#benefitCard2Title", "#benefitCard3Title"];
         const cardTexts = ["#benefitCard1Text", "#benefitCard2Text", "#benefitCard3Text"];
         
@@ -267,7 +322,6 @@ function aplicarConteudoCapClear() {
             howSubtitulo.text = CAPCLEAR_CONTENT.how.subtitulo;
         }
         
-        // Passos 1, 2, 3
         CAPCLEAR_CONTENT.how.passos.forEach((passo, index) => {
             const stepTitle = $w(`#step${index + 1}Title`);
             if (stepTitle && stepTitle.text !== undefined) {
@@ -324,7 +378,6 @@ function aplicarConteudoCapClear() {
             telebuscaTexto.text = CAPCLEAR_CONTENT.telebusca.texto;
         }
         
-        // Benefícios da Telebusca
         const telebuscaBeneficios = ["#telebuscaBenefit1", "#telebuscaBenefit2", "#telebuscaBenefit3"];
         CAPCLEAR_CONTENT.telebusca.beneficios.forEach((beneficio, index) => {
             const benefitElement = $w(telebuscaBeneficios[index]);
@@ -350,6 +403,11 @@ function aplicarConteudoCapClear() {
     // RODAPÉ
     // ============================================
     try {
+        const footerLogo = $w("#footerLogo");
+        if (footerLogo && footerLogo.text !== undefined) {
+            footerLogo.text = CAPCLEAR_CONTENT.nav.logo;
+        }
+        
         const footerCidade = $w("#footerCidade");
         if (footerCidade && footerCidade.text !== undefined) {
             footerCidade.text = CAPCLEAR_CONTENT.footer.cidade;
@@ -366,20 +424,18 @@ function aplicarConteudoCapClear() {
 }
 
 /**
- * Atualiza os dados dos postos nos elementos da página
+ * Atualiza os dados dos postos
  */
 function atualizarDadosPostos() {
     CONFIG.postos.forEach((posto, index) => {
         const indice = index + 1;
         
         try {
-            // Nome do posto
             const nomeElement = $w(`#posto${indice}Nome`);
             if (nomeElement && nomeElement.text !== undefined) {
                 nomeElement.text = posto.nome;
             }
             
-            // Endereço do posto
             const enderecoElement = $w(`#posto${indice}Endereco`);
             if (enderecoElement && enderecoElement.text !== undefined) {
                 enderecoElement.text = posto.endereco;
@@ -392,7 +448,6 @@ function atualizarDadosPostos() {
 
 /**
  * Configura os botões de rota para cada posto
- * Suporta botões separados para Maps e Waze
  */
 function setupPostosNavigation() {
     CONFIG.postos.forEach((posto, index) => {
@@ -407,18 +462,10 @@ function setupPostosNavigation() {
             });
         }
         
-        // Botão Waze (ou botão único de rota)
+        // Botão Waze
         const wazeButton = $w(`#posto${indice}Waze`);
         if (wazeButton) {
             wazeButton.onClick(() => {
-                handleMapNavigation(posto.coordenadas.lat, posto.coordenadas.lng, posto.endereco);
-            });
-        }
-        
-        // Fallback: botão único "Traçar Rota"
-        const routeButton = $w(`#posto${indice}Rota`);
-        if (routeButton) {
-            routeButton.onClick(() => {
                 handleMapNavigation(posto.coordenadas.lat, posto.coordenadas.lng, posto.endereco);
             });
         }
@@ -436,6 +483,13 @@ function setupFooterLinks() {
         });
     }
     
+    const facebookLink = $w("#footerFacebook");
+    if (facebookLink) {
+        facebookLink.onClick(() => {
+            wixLocation.to(CONFIG.facebook);
+        });
+    }
+    
     const emailLink = $w("#footerEmail");
     if (emailLink) {
         emailLink.onClick(() => {
@@ -443,19 +497,10 @@ function setupFooterLinks() {
             wixLocation.to(mailtoUrl);
         });
     }
-    
-    const telefoneLink = $w("#footerTelefone");
-    if (telefoneLink) {
-        telefoneLink.onClick(() => {
-            const numeroLimpo = CONFIG.telefone.replace(/\D/g, '');
-            const telUrl = `tel:+${numeroLimpo}`;
-            wixLocation.to(telUrl);
-        });
-    }
 }
 
 /**
- * Configura menu mobile (se existir)
+ * Configura menu mobile
  */
 function setupMobileMenu() {
     const menuButton = $w("#mobileMenuButton");
@@ -487,15 +532,10 @@ function setupMobileMenu() {
     }
 }
 
-// ============================================
-// CONFIGURAÇÃO DE ANIMAÇÕES
-// ============================================
-
 /**
- * Prepara animações para elementos ao entrar no viewport
+ * Configura animações lazy loading
  */
 function setupAnimations() {
-    // Seção Benefits
     const benefitsSection = $w("#sectionBenefits");
     if (benefitsSection) {
         benefitsSection.onViewportEnter(() => {
@@ -511,7 +551,6 @@ function setupAnimations() {
         });
     }
     
-    // Seção Como Funciona
     const howSection = $w("#sectionHow");
     if (howSection) {
         howSection.onViewportEnter(() => {
@@ -533,14 +572,10 @@ function setupAnimations() {
 // ============================================
 
 $w.onReady(async () => {
-    // ============================================
-    // APLICAÇÃO DE CONTEÚDO E IDENTIDADE VISUAL
-    // ============================================
-    aplicarConteudoCapClear();
+    // Aplicar conteúdo completo
+    aplicarConteudoCompleto();
     
-    // ============================================
-    // HERO SECTION - Botões CTA
-    // ============================================
+    // Hero Section - Botões CTA
     const heroCtaPrimary = $w("#heroCtaPrimary");
     if (heroCtaPrimary) {
         heroCtaPrimary.onClick(() => {
@@ -555,15 +590,11 @@ $w.onReady(async () => {
         });
     }
     
-    // ============================================
-    // SEÇÃO MAPAS - Atualizar dados e configurar navegação
-    // ============================================
+    // Seção Mapas
     atualizarDadosPostos();
     setupPostosNavigation();
     
-    // ============================================
-    // TELEBUSCA - Botão WhatsApp
-    // ============================================
+    // Telebusca
     const telebuscaButton = $w("#telebuscaButton");
     if (telebuscaButton) {
         telebuscaButton.onClick(() => {
@@ -571,164 +602,16 @@ $w.onReady(async () => {
         });
     }
     
-    // ============================================
-    // MENU MOBILE
-    // ============================================
+    // Menu Mobile
     setupMobileMenu();
     
-    // ============================================
-    // ANIMAÇÕES - Configuração inicial (Lazy Loading)
-    // ============================================
+    // Animações
     setupAnimations();
     
-    // ============================================
-    // RODAPÉ - Links de contato e redes sociais
-    // ============================================
+    // Rodapé
     setupFooterLinks();
     
-    console.log("✅ CapClear Landing Page (Estilo Moderno) inicializada");
+    console.log("✅ CapClear Landing Page Moderna inicializada");
     console.log(`📱 Formato: ${wixWindow.formFactor}`);
     console.log(`📍 Postos configurados: ${CONFIG.postos.length}`);
-    console.log(`🎨 Identidade visual CapClear aplicada`);
 });
-
-// ============================================
-// NOTAS PARA IMPLEMENTAÇÃO NO EDITOR WIX
-// ============================================
-/*
- * ============================================
- * ESTRUTURA DA LANDING PAGE (ESTILO MODERNO)
- * ============================================
- * 
- * Esta landing page segue o estilo moderno do homepage.html
- * com design "Industrial Clean" adaptado para Wix Velo.
- * 
- * ============================================
- * HERO SECTION:
- * ============================================
- * - Badge: ID = "heroBadge" (texto: "⚡ Higienização Expressa")
- * - H1 Parte 1: ID = "heroH1" (texto: "SEU CAPACETE")
- * - H1 Destaque: ID = "heroH1Highlight" (texto: "NOVO DE NOVO")
- * - H1 Parte Final: ID = "heroH1End" (texto: "EM MINUTOS.")
- * - Subtítulo: ID = "heroSubtitle"
- * - Botão CTA Primário: ID = "heroCtaPrimary" → Scroll para #sectionMaps
- * - Botão CTA Secundário: ID = "heroCtaSecondary" → Scroll para #sectionTelebusca
- * 
- * ============================================
- * SEÇÃO BENEFITS / "POR QUE USAR?":
- * ============================================
- * - Container: ID = "sectionBenefits" (para animações)
- * - Título: ID = "benefitsTitulo" (texto: "Higiene é segurança.")
- * - Card 1: ID = "benefitCard1"
- *   - Título: ID = "benefitCard1Title" (texto: "Saúde Blindada")
- *   - Texto: ID = "benefitCard1Text"
- * - Card 2: ID = "benefitCard2"
- *   - Título: ID = "benefitCard2Title" (texto: "Agilidade Total")
- *   - Texto: ID = "benefitCard2Text"
- * - Card 3: ID = "benefitCard3"
- *   - Título: ID = "benefitCard3Title" (texto: "Conforto Real")
- *   - Texto: ID = "benefitCard3Text"
- * 
- * ============================================
- * SEÇÃO "COMO FUNCIONA":
- * ============================================
- * - Container: ID = "sectionHow" (para animações)
- * - Título: ID = "howTitulo" (texto: "COMO FUNCIONA")
- * - Subtítulo: ID = "howSubtitulo" (texto: "Simples, rápido e sem burocracia.")
- * - Passo 1: ID = "step1"
- *   - Título: ID = "step1Title" (texto: "Coloque")
- *   - Descrição: ID = "step1Desc" (texto: "Abra a máquina e posicione o capacete.")
- * - Passo 2: ID = "step2"
- *   - Título: ID = "step2Title" (texto: "Pague")
- *   - Descrição: ID = "step2Desc" (texto: "Pix ou Cartão direto na máquina.")
- * - Passo 3: ID = "step3"
- *   - Título: ID = "step3Title" (texto: "Pronto")
- *   - Descrição: ID = "step3Desc" (texto: "Aguarde o ciclo e retire limpinho.")
- * 
- * ============================================
- * SEÇÃO "ONDE ENCONTRAR" (PRIORIDADE):
- * ============================================
- * - Container: ID = "sectionMaps" (necessário para scroll suave)
- * - Badge: ID = "mapsBadge" (texto: "Canoas / RS")
- * - Título: ID = "mapsTitulo" (texto: "ENCONTRE O POSTO MAIS PRÓXIMO")
- * - Subtítulo: ID = "mapsSubtitulo" (texto: "Já estamos em 3 pontos estratégicos...")
- * 
- * Para cada posto (1, 2, 3):
- * - Card Posto: ID = "posto1", "posto2", "posto3"
- * - Nome: ID = "posto1Nome", "posto2Nome", "posto3Nome"
- * - Endereço: ID = "posto1Endereco", "posto2Endereco", "posto3Endereco"
- * - Botão Maps: ID = "posto1Maps", "posto2Maps", "posto3Maps" (opcional)
- * - Botão Waze: ID = "posto1Waze", "posto2Waze", "posto3Waze" (opcional)
- * - OU Botão único: ID = "posto1Rota", "posto2Rota", "posto3Rota"
- * 
- * ============================================
- * SEÇÃO TELEBUSCA:
- * ============================================
- * - Container: ID = "sectionTelebusca"
- * - Título: ID = "telebuscaTitulo" (texto: "NÃO PODE IR ATÉ O POSTO?")
- * - Título Destaque: ID = "telebuscaTituloHighlight" (texto: "A GENTE BUSCA.")
- * - Texto: ID = "telebuscaTexto"
- * - Benefício 1: ID = "telebuscaBenefit1"
- * - Benefício 2: ID = "telebuscaBenefit2"
- * - Benefício 3: ID = "telebuscaBenefit3"
- * - Botão: ID = "telebuscaButton" → Abre WhatsApp
- * - Horário: ID = "telebuscaHorario" (texto: "Atendimento de Seg a Sáb...")
- * 
- * ============================================
- * MENU DE NAVEGAÇÃO (OPCIONAL):
- * ============================================
- * - Botão Menu Mobile: ID = "mobileMenuButton"
- * - Menu Mobile: ID = "mobileMenu"
- * - Links do menu: ID = "mobileMenuLink1", "mobileMenuLink2", "mobileMenuLink3"
- * 
- * ============================================
- * RODAPÉ:
- * ============================================
- * - Cidade: ID = "footerCidade" (texto: "Canoas, Rio Grande do Sul.")
- * - Copyright: ID = "footerCopyright" (será preenchido automaticamente com ano)
- * - Link Instagram: ID = "footerInstagram"
- * - Link E-mail: ID = "footerEmail"
- * - Link Telefone: ID = "footerTelefone"
- * 
- * ============================================
- * DADOS A ATUALIZAR NO CÓDIGO:
- * ============================================
- * 
- * 1. CONFIG.whatsapp.numero - Número do WhatsApp
- * 2. CONFIG.instagram - URL do Instagram
- * 3. CONFIG.email - E-mail de contato
- * 4. CONFIG.telefone - Telefone de contato
- * 5. CONFIG.postos - Array com dados reais dos 3 postos
- *    (nome, endereco, coordenadas.lat, coordenadas.lng)
- * 
- * ============================================
- * DESIGN SYSTEM - CORES:
- * ============================================
- * 
- * Use estas constantes para estilizar no Editor Wix:
- * - COLORS.PRIMARY_CTA: #3000FF (Azul Ultra Tech)
- * - COLORS.BACKGROUND: #181818 (Cinza Asfalto)
- * - COLORS.TEXT: #F2F2F2 (Branco Pureza)
- * - COLORS.ACCENT: #B0B0B0 (Prata/Metal)
- * - COLORS.BLUE_600: #2563EB (Azul para gradientes)
- * - COLORS.SLATE_900: #0F172A (Slate escuro)
- * - COLORS.SLATE_800: #1E293B (Slate médio)
- * 
- * ============================================
- * FUNCIONALIDADES IMPLEMENTADAS:
- * ============================================
- * 
- * ✅ Scroll suave Hero → Seções
- * ✅ Localizador inteligente (Waze Mobile / Maps Desktop)
- * ✅ Deep linking Waze com fallback para Google Maps
- * ✅ WhatsApp com mensagem pré-formatada
- * ✅ Atualização automática de dados dos postos
- * ✅ Suporte para botões Maps e Waze separados
- * ✅ Animações lazy loading (onViewportEnter)
- * ✅ Menu mobile funcional
- * ✅ Links do rodapé (Instagram, E-mail, Telefone)
- * ✅ Tratamento de erros robusto
- * ✅ Detecção de dispositivo (Mobile/Desktop)
- * ✅ Design System completo
- * ✅ Estilo moderno inspirado no homepage.html
- */
