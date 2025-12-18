@@ -19,6 +19,66 @@ const COLORS = {
 };
 
 // ============================================
+// CONTEÚDO CAPCLEAR - TEXTOS E IDENTIDADE
+// ============================================
+const CAPCLEAR_CONTENT = {
+    // Hero Section
+    hero: {
+        h1: "Seu capacete novo de novo em minutos.",
+        h2: "Tá na correria? A gente limpa. Tecnologia de ponta para eliminar bactérias e o mau cheiro enquanto você abastece.",
+        cta: "📍 Encontrar máquina mais próxima"
+    },
+    
+    // Seção "Por que usar?"
+    why: {
+        titulo: "Higiene é segurança.",
+        cards: [
+            {
+                titulo: "Zero Bactérias",
+                texto: "Eliminamos fungos e ácaros que causam doenças de pele e respiratórias. Proteção real para sua cabeça."
+            },
+            {
+                titulo: "Adeus, Mau Cheiro",
+                texto: "O fim do capacete com cheiro de suor. Sinta o frescor de um equipamento novo todo dia."
+            },
+            {
+                titulo: "Vapt-Vupt",
+                texto: "Serviço express automatizado. Você resolve isso rapidinho, sem mudar sua rota."
+            }
+        ]
+    },
+    
+    // Seção "Como Funciona"
+    how: {
+        titulo: "Simples assim:",
+        passos: [
+            "Coloque o capacete na máquina.",
+            "Pague com Pix ou Cartão.",
+            "Aguarde a mágica acontecer."
+        ]
+    },
+    
+    // Seção "Onde Encontrar"
+    maps: {
+        titulo: "Onde tem CapClear?",
+        subtitulo: "Já estamos operando em 3 pontos estratégicos de Canoas. É só encostar.",
+        nota: "Fique ligado na nossa Unidade Móvel rodando pela cidade!"
+    },
+    
+    // Seção Telebusca
+    telebusca: {
+        titulo: "Não pode ir até o posto? A gente busca.",
+        texto: "A CapClear vai até você. Agende a coleta do seu capacete e receba ele higienizado onde estiver.",
+        cta: "📱 Agendar Telebusca no WhatsApp"
+    },
+    
+    // Rodapé
+    footer: {
+        texto: "CapClear © 2024. A solução definitiva para o motociclista."
+    }
+};
+
+// ============================================
 // CONFIGURAÇÃO - ATUALIZE COM SEUS DADOS REAIS
 // ============================================
 const CONFIG = {
@@ -208,8 +268,141 @@ function setupFooterLinks() {
 }
 
 // ============================================
-// CONFIGURAÇÃO DOS POSTOS
+// APLICAÇÃO DE CONTEÚDO E IDENTIDADE VISUAL
 // ============================================
+
+/**
+ * Preenche automaticamente todos os textos da landing page
+ * com o conteúdo oficial da CapClear
+ */
+function aplicarConteudoCapClear() {
+    // ============================================
+    // HERO SECTION
+    // ============================================
+    try {
+        const heroH1 = $w("#heroH1");
+        if (heroH1 && heroH1.text !== undefined) {
+            heroH1.text = CAPCLEAR_CONTENT.hero.h1;
+        }
+        
+        const heroH2 = $w("#heroH2");
+        if (heroH2 && heroH2.text !== undefined) {
+            heroH2.text = CAPCLEAR_CONTENT.hero.h2;
+        }
+        
+        const heroButton = $w("#btnHeroAction");
+        if (heroButton && heroButton.label !== undefined) {
+            heroButton.label = CAPCLEAR_CONTENT.hero.cta;
+        }
+    } catch (error) {
+        console.log("Elementos do Hero não encontrados (opcional)");
+    }
+    
+    // ============================================
+    // SEÇÃO "POR QUE USAR?"
+    // ============================================
+    try {
+        const whyTitulo = $w("#whyTitulo");
+        if (whyTitulo && whyTitulo.text !== undefined) {
+            whyTitulo.text = CAPCLEAR_CONTENT.why.titulo;
+        }
+        
+        // Cards: Saúde, Conforto, Agilidade
+        const cardTitles = ["#cardHealthTitle", "#cardComfortTitle", "#cardSpeedTitle"];
+        const cardTexts = ["#cardHealthText", "#cardComfortText", "#cardSpeedText"];
+        
+        CAPCLEAR_CONTENT.why.cards.forEach((card, index) => {
+            const titleElement = $w(cardTitles[index]);
+            if (titleElement && titleElement.text !== undefined) {
+                titleElement.text = card.titulo;
+            }
+            
+            const textElement = $w(cardTexts[index]);
+            if (textElement && textElement.text !== undefined) {
+                textElement.text = card.texto;
+            }
+        });
+    } catch (error) {
+        console.log("Elementos da seção 'Por que usar?' não encontrados (opcional)");
+    }
+    
+    // ============================================
+    // SEÇÃO "COMO FUNCIONA"
+    // ============================================
+    try {
+        const howTitulo = $w("#howTitulo");
+        if (howTitulo && howTitulo.text !== undefined) {
+            howTitulo.text = CAPCLEAR_CONTENT.how.titulo;
+        }
+        
+        // Passos 1, 2, 3
+        const stepElements = ["#step1Text", "#step2Text", "#step3Text"];
+        CAPCLEAR_CONTENT.how.passos.forEach((passo, index) => {
+            const stepElement = $w(stepElements[index]);
+            if (stepElement && stepElement.text !== undefined) {
+                stepElement.text = passo;
+            }
+        });
+    } catch (error) {
+        console.log("Elementos da seção 'Como Funciona' não encontrados (opcional)");
+    }
+    
+    // ============================================
+    // SEÇÃO "ONDE ENCONTRAR"
+    // ============================================
+    try {
+        const mapsTitulo = $w("#mapsTitulo");
+        if (mapsTitulo && mapsTitulo.text !== undefined) {
+            mapsTitulo.text = CAPCLEAR_CONTENT.maps.titulo;
+        }
+        
+        const mapsSubtitulo = $w("#mapsSubtitulo");
+        if (mapsSubtitulo && mapsSubtitulo.text !== undefined) {
+            mapsSubtitulo.text = CAPCLEAR_CONTENT.maps.subtitulo;
+        }
+        
+        const mapsNota = $w("#mapsNota");
+        if (mapsNota && mapsNota.text !== undefined) {
+            mapsNota.text = CAPCLEAR_CONTENT.maps.nota;
+        }
+    } catch (error) {
+        console.log("Elementos da seção 'Onde Encontrar' não encontrados (opcional)");
+    }
+    
+    // ============================================
+    // SEÇÃO TELEBUSCA
+    // ============================================
+    try {
+        const telebuscaTitulo = $w("#telebuscaTitulo");
+        if (telebuscaTitulo && telebuscaTitulo.text !== undefined) {
+            telebuscaTitulo.text = CAPCLEAR_CONTENT.telebusca.titulo;
+        }
+        
+        const telebuscaTexto = $w("#telebuscaTexto");
+        if (telebuscaTexto && telebuscaTexto.text !== undefined) {
+            telebuscaTexto.text = CAPCLEAR_CONTENT.telebusca.texto;
+        }
+        
+        const telebuscaButton = $w("#btnWhatsapp");
+        if (telebuscaButton && telebuscaButton.label !== undefined) {
+            telebuscaButton.label = CAPCLEAR_CONTENT.telebusca.cta;
+        }
+    } catch (error) {
+        console.log("Elementos da seção Telebusca não encontrados (opcional)");
+    }
+    
+    // ============================================
+    // RODAPÉ
+    // ============================================
+    try {
+        const footerTexto = $w("#footerTexto");
+        if (footerTexto && footerTexto.text !== undefined) {
+            footerTexto.text = CAPCLEAR_CONTENT.footer.texto;
+        }
+    } catch (error) {
+        console.log("Elemento do rodapé não encontrado (opcional)");
+    }
+}
 
 /**
  * Atualiza os dados dos postos nos elementos da página (se existirem)
@@ -274,6 +467,12 @@ function setupPostosNavigation() {
 
 $w.onReady(async () => {
     // ============================================
+    // APLICAÇÃO DE CONTEÚDO E IDENTIDADE VISUAL
+    // ============================================
+    // Preenche automaticamente todos os textos da CapClear
+    aplicarConteudoCapClear();
+    
+    // ============================================
     // HERO SECTION - Botão CTA Principal
     // ============================================
     // ID necessário: #btnHeroAction
@@ -318,6 +517,7 @@ $w.onReady(async () => {
     console.log("✅ CapClear Landing Page inicializada");
     console.log(`📱 Formato: ${wixWindow.formFactor}`);
     console.log(`📍 Postos configurados: ${CONFIG.postos.length}`);
+    console.log(`🎨 Identidade visual CapClear aplicada`);
 });
 
 // ============================================
@@ -329,20 +529,27 @@ $w.onReady(async () => {
  * ============================================
  * 
  * HERO SECTION:
+ * - H1: ID = "heroH1" (será preenchido: "Seu capacete novo de novo em minutos.")
+ * - H2: ID = "heroH2" (será preenchido: "Tá na correria? A gente limpa...")
  * - Botão: ID = "btnHeroAction"
- *   Texto: "📍 Encontrar máquina mais próxima"
+ *   Texto: Será preenchido automaticamente: "📍 Encontrar máquina mais próxima"
  *   Cor: Use COLORS.PRIMARY_CTA (#3000FF)
  * 
  * SEÇÃO MAPAS (PRIORIDADE):
  * - Container: ID = "sectionMaps" (necessário para scroll suave)
+ * - Título: ID = "mapsTitulo" (será preenchido: "Onde tem CapClear?")
+ * - Subtítulo: ID = "mapsSubtitulo" (será preenchido: "Já estamos operando...")
+ * - Nota: ID = "mapsNota" (será preenchido: "Fique ligado na nossa Unidade Móvel...")
  * - Botões de rota (um para cada posto):
  *   ID = "btnRoute1", "btnRoute2", "btnRoute3"
  *   Texto: "Traçar Rota"
  *   Cor: Use COLORS.PRIMARY_CTA (#3000FF)
  * 
  * TELEBUSCA:
+ * - Título: ID = "telebuscaTitulo" (será preenchido: "Não pode ir até o posto? A gente busca.")
+ * - Texto: ID = "telebuscaTexto" (será preenchido: "A CapClear vai até você...")
  * - Botão: ID = "btnWhatsapp"
- *   Texto: "📱 Agendar Telebusca no WhatsApp"
+ *   Texto: Será preenchido automaticamente: "📱 Agendar Telebusca no WhatsApp"
  *   Cor: Use verde WhatsApp ou COLORS.PRIMARY_CTA
  * 
  * ============================================
@@ -357,13 +564,25 @@ $w.onReady(async () => {
  * - Texto Nome Posto 3: ID = "posto3Nome"
  * - Texto Endereço Posto 3: ID = "posto3Endereco"
  * 
- * SEÇÕES PARA ANIMAÇÕES (Lazy Loading):
- * - Container: ID = "sectionWhy" (seção "Por que usar?")
- * - Container: ID = "sectionHow" (seção "Como Funciona")
- * - Cards: ID = "cardHealth", "cardComfort", "cardSpeed"
- * - Passos: ID = "step1", "step2", "step3"
+ * SEÇÃO "POR QUE USAR?":
+ * - Título: ID = "whyTitulo" (será preenchido: "Higiene é segurança.")
+ * - Card Saúde: ID = "cardHealthTitle", "cardHealthText"
+ *   (será preenchido: "Zero Bactérias" / "Eliminamos fungos e ácaros...")
+ * - Card Conforto: ID = "cardComfortTitle", "cardComfortText"
+ *   (será preenchido: "Adeus, Mau Cheiro" / "O fim do capacete...")
+ * - Card Agilidade: ID = "cardSpeedTitle", "cardSpeedText"
+ *   (será preenchido: "Vapt-Vupt" / "Serviço express automatizado...")
+ * - Container: ID = "sectionWhy" (para animações)
+ * 
+ * SEÇÃO "COMO FUNCIONA":
+ * - Título: ID = "howTitulo" (será preenchido: "Simples assim:")
+ * - Passo 1: ID = "step1Text" (será preenchido: "Coloque o capacete na máquina.")
+ * - Passo 2: ID = "step2Text" (será preenchido: "Pague com Pix ou Cartão.")
+ * - Passo 3: ID = "step3Text" (será preenchido: "Aguarde a mágica acontecer.")
+ * - Container: ID = "sectionHow" (para animações)
  * 
  * RODAPÉ:
+ * - Texto: ID = "footerTexto" (será preenchido: "CapClear © 2024. A solução definitiva...")
  * - Link Instagram: ID = "instagramLink"
  * - Link E-mail: ID = "emailLink"
  * - Link Telefone: ID = "telefoneLink"
