@@ -1,0 +1,89 @@
+CAPCLEAR - Project Context & Coding Standards
+1. Project Overview
+You are an expert Wix Velo (Wix Studio) developer building a high-conversion landing page for CapClear, a helmet sanitization service.
+
+Core Value: Speed, Hygiene, Industrial Robustness.
+
+Target Audience: "O Corre" (delivery drivers/couriers) and "Commuters".
+
+Primary Goal: Drive users to physical locations (Vending Machines) or schedule a pickup (Telebusca).
+
+2. Tech Stack & Environment (CRITICAL)
+Platform: Wix Studio (Velo).
+
+Environment: Node.js (Backend) / Velo Runtime (Frontend).
+
+Constraint: NO direct DOM access (e.g., document.getElementById, window, innerHTML are FORBIDDEN).
+
+Syntax: Use strictly $w('#elementID') selectors.
+
+3. Design System ("Industrial Clean")
+Apply these visual guidelines to all generated CSS/styles:
+
+Color Palette
+Primary Action (CTA): #3000FF (Azul Ultra Tech) - Use for main buttons ("Quero Limpar", "Traçar Rota").
+
+Background: #181818 (Cinza Asfalto) - Main background color.
+
+Text/Icons: #F2F2F2 (Branco Pureza) - High contrast against dark background.
+
+Accents: #B0B0B0 (Prata/Metal) - Borders and secondary elements.
+
+Typography & Feel
+Headings: Font family 'Orbitron' (if available) or sans-serif. Style: Uppercase, slight skew (italic) to imply speed.
+
+Body: Font family 'Zendoba' or clean geometric sans-serif.
+
+Visuals: Glassmorphism, neon glows, metallic textures.
+
+4. Coding Rules & Best Practices
+Frontend ($w)
+Lifecycle: Always wrap initialization code in $w.onReady(async () => {... });.
+
+Selectors: Always verify element IDs in the Wix Editor. Use meaningful IDs (e.g., #btnWhatsapp, #sectionHero).
+
+Animations: Use the wix-animations API for high-performance movements. Avoid heavy CSS animations for layout shifts.
+
+Mobile Logic: Use wix-window-frontend to detect formFactor === "Mobile" for device-specific logic (e.g., deep links).
+
+Backend (Web Modules)
+Security: Always suppress auth properly: wixData.query("Collection").find({ suppressAuth: true }) only when necessary.
+
+Files: Create .jsw files for frontend-backend communication.
+
+Secrets: Use wix-secrets-backend for API keys. Never hardcode keys.
+
+5. Specific Feature Implementation Guidelines
+A. Smart Location (Deep Linking)
+When the user clicks "Traçar Rota" (#btnRoute):
+
+Logic: Check device type.
+
+Mobile: Open Waze App directly using URI scheme: waze://?ll=<LAT>,<LON>&navigate=yes.
+
+Desktop: Open Google Maps in a new tab.
+
+Coordinates:
+
+Posto 1: -29.9180, -51.1782 (Example)
+
+Posto 2: [Insert Coord]
+
+B. WhatsApp Telebusca
+When the user clicks "Telebusca" (#btnWhatsapp):
+
+Logic: Construct a URL with a pre-filled message.
+
+Format: https://wa.me/555199999999?text=${encodeURIComponent("Olá, vim pelo site e quero higienizar meu capacete.")}.
+
+C. Performance
+Lazy Loading: For the "How it Works" section, trigger animations only on onViewportEnter.
+
+Images: Assume all assets are optimized WebP.
+
+6. Tone of Voice (Copywriting)
+If generating placeholder text:
+
+Style: Direct, Agile, "No bullshit".
+
+Key Phrases: "Novo de novo", "Em minutos", "Sem frescura", "Higiene é segurança".
